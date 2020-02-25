@@ -1,0 +1,12 @@
+<form method="POST" action="{{ .Site.Params.staticman.api }}">
+  <input type="hidden" name="options[redirect]" value="{{ .Permalink }}#comment-submitted">
+	<input type="hidden" name="options[entryId]" value="{{ .File.UniqueID }}">
+	<input type="hidden" name="options[reCaptcha][siteKey]" value="{{ .Site.Params.staticman.reCaptcha.siteKey }}">
+	<input type="hidden" name="options[reCaptcha][secret]" value="{{ .Site.Params.staticman.reCaptcha.secret }}">
+	<input name="fields[name]" type="text" placeholder="Your name">
+	<input name="fields[email]" type="email" placeholder="Your email address">
+	<textarea name="fields[body]" placeholder="Your message. Feel free to use Markdown." rows="10"></textarea>
+	<div class="g-recaptcha" data-sitekey="{{ .Site.Params.staticman.reCaptcha.siteKey }}"></div>
+	<input type="submit" value="Submit">
+</form>
+<script src='https://www.google.com/recaptcha/api.js'></script>

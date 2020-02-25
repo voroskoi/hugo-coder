@@ -1,0 +1,27 @@
+{{ if (.Site.Params.staticman.api) }}
+  {{ $comments := readDir "data/comments" }}
+  {{ $.Scratch.Add "hasComments" 0 }}
+  {{ $entryId := .File.UniqueID }}
+
+  {{ range $comments }}
+    {{ if eq .Name $entryId }}
+      {{ $.Scratch.Add "hasComments" 1 }}
+      {{ range $index, $comments := (index $.Site.Data.comments $entryId ) }}
+<blockquote>
+  <p>{{ .body | markdownify }}</p>
+  <cite>
+    <img src="https://www.gravatar.com/avatar/{{ .email }}?s=100">
+    <br>
+    <strong>{{ .name }}</strong><br>{{ dateFormat "2006-01-02" .date }}
+	</cite>
+</blockquote>
+
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  {{ if eq ($.Scratch.Get "hasComments") 0 }}
+    <p>Hey, be the first who comment this article.</p>
+  {{ end }}
+  {{ partial "posts/staticman-form.html" . }}
+{{ end }}
